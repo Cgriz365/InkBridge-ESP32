@@ -1,0 +1,21 @@
+{
+  "name": "InkBridge-ESP32",
+  "version": "1.0.0",
+  "keywords": "Arduino, ESP32, Spotify, Weather, Stocks, News, Calendar, Travel Time, Canvas LMS, Ical, ICS",
+  "description": "Provides functions to interact with the InkBase API. Spotify Web API integration, weather, stocks, news, calendar, travel, and canvas management.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/cgriz365/InkBridge-ESP32"
+  },
+  "authors":
+  [
+    {
+        "name": "cgriz365",
+        "email": "carterjgrizzle@gmail.com",
+        "maintainer": true
+    }
+  ],
+  "frameworks": "arduino",
+  "platforms": "espressif32"
+}
