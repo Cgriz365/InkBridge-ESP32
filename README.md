@@ -1,4 +1,5 @@
 # InkBridge Library Documentation
+## Built for [InkBridge](inkbase01.web.app), [Github Repo](https://github.com/Cgriz365/InkBridge) ##
 
 A comprehensive Arduino library for ESP32 devices that provides seamless integration with the InkBase cloud API, enabling access to weather, stocks, crypto, news, calendar, travel, Spotify, and custom canvas data.
 
