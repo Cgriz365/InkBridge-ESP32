@@ -291,6 +291,41 @@ String InkBridge::getStock(String symbol) {
     return sendRequest("/stock", "POST", json);
 }
 
+String InkBridge::getCrypto(String symbol) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    if(symbol != "") doc["symbol"] = symbol;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/crypto", "POST", json);
+}
+
+String InkBridge::getStockArray(String symbol, int days) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    if(symbol != "") doc["symbol"] = symbol;
+    doc["days"] = days;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/stock/array", "POST", json);
+}
+
+String InkBridge::getCryptoArray(String symbol, int days) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    if(symbol != "") doc["symbol"] = symbol;
+    doc["days"] = days;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/crypto/array", "POST", json);
+}
+
 String InkBridge::getNews(String category) {
     JsonDocument doc;
     doc["uid"] = _uid;
@@ -348,6 +383,80 @@ String InkBridge::spotifyRequest(String endpoint, String method, String body) {
     String json;
     serializeJson(doc, json);
     return sendRequest("/spotify/request", "POST", json);
+}
+
+String InkBridge::getSpotifyAlbums(int limit, int offset) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    doc["limit"] = limit;
+    doc["offset"] = offset;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/spotify/user_albums", "POST", json);
+}
+
+String InkBridge::getSpotifyPlaylists(int limit, int offset) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    doc["limit"] = limit;
+    doc["offset"] = offset;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/spotify/user_playlists", "POST", json);
+}
+
+String InkBridge::getSpotifyLikedSongs(int limit, int offset) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    doc["limit"] = limit;
+    doc["offset"] = offset;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/spotify/liked_songs", "POST", json);
+}
+
+String InkBridge::getSpotifyFollowedArtists(int limit, String after) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    doc["limit"] = limit;
+    if (after != "") doc["after"] = after;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/spotify/followed_artists", "POST", json);
+}
+
+String InkBridge::getSpotifyDevices() {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/spotify/devices", "POST", json);
+}
+
+String InkBridge::spotifyPlayback(String action, String uri, int volume, int position, String state, String targetDeviceId) {
+    JsonDocument doc;
+    doc["uid"] = _uid;
+    doc["device_id"] = _deviceId;
+    doc["action"] = action;
+    if (uri != "") doc["uri"] = uri;
+    if (volume != -1) doc["volume_percent"] = volume;
+    if (position != -1) doc["position_ms"] = position;
+    if (state != "") doc["state"] = state;
+    if (targetDeviceId != "") doc["target_device_id"] = targetDeviceId;
+
+    String json;
+    serializeJson(doc, json);
+    return sendRequest("/spotify/playback", "POST", json);
 }
 
 String InkBridge::getDeviceId()
