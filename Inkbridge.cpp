@@ -312,23 +312,23 @@ Response InkBridge::getWeather(String location)
     return weather;
 }
 
-double InkBridge::getWeatherTemperature() {
-    if (weather.data.isNull()) getWeather();
+double InkBridge::getWeatherTemperature(String location) {
+    if (weather.data.isNull()) getWeather(location);
     return weather.data["temperature"].as<double>();
 }
 
-String InkBridge::getWeatherCondition() {
-    if (weather.data.isNull()) getWeather();
+String InkBridge::getWeatherCondition(String location) {
+    if (weather.data.isNull()) getWeather(location);
     return weather.data["condition"].as<String>();
 }
 
-String InkBridge::getWeatherDescription() {
-    if (weather.data.isNull()) getWeather();
+String InkBridge::getWeatherDescription(String location) {
+    if (weather.data.isNull()) getWeather(location);
     return weather.data["description"].as<String>();
 }
 
-String InkBridge::getWeatherLocation() {
-    if (weather.data.isNull()) getWeather();
+String InkBridge::getWeatherLocation(String location) {
+    if (weather.data.isNull()) getWeather(location);
     return weather.data["location"].as<String>();
 }
 
@@ -344,44 +344,44 @@ Response InkBridge::getWeatherForecast(String location, int days) {
     return weatherForecast;
 }
 
-int InkBridge::getWeatherForcastDayCount() {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+int InkBridge::getWeatherForcastDayCount(String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["forecast"].size();
 }
 
-String InkBridge::getWeatherForcastLocation() {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForcastLocation(String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["location"].as<String>();
 }
 
-String InkBridge::getWeatherForecastDate(int index) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastDate(int index, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["forecast"][index]["date"].as<String>();
 }
 
-String InkBridge::getWeatherForecastMinTemp(int index) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastMinTemp(int index, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["forecast"][index]["min_temp"].as<String>();
 }
 
-String InkBridge::getWeatherForecastMaxTemp(int index) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastMaxTemp(int index, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["forecast"][index]["max_temp"].as<String>();
 }
 
-String InkBridge::getWeatherForecastCondition(int index) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastCondition(int index, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["forecast"][index]["condition"].as<String>();
 }
 
-String InkBridge::getWeatherForcastTrend() {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForcastTrend(String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     return weatherForecast.data["trend"].as<String>();
 }
 
 // Overloads for searching by date
-String InkBridge::getWeatherForecastMinTemp(String date) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastMinTemp(String date, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     JsonArray arr = weatherForecast.data["forecast"];
     for (JsonVariant v : arr) {
         if (v["date"].as<String>() == date) return v["min_temp"].as<String>();
@@ -389,8 +389,8 @@ String InkBridge::getWeatherForecastMinTemp(String date) {
     return "";
 }
 
-String InkBridge::getWeatherForecastMaxTemp(String date) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastMaxTemp(String date, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     JsonArray arr = weatherForecast.data["forecast"];
     for (JsonVariant v : arr) {
         if (v["date"].as<String>() == date) return v["max_temp"].as<String>();
@@ -398,8 +398,8 @@ String InkBridge::getWeatherForecastMaxTemp(String date) {
     return "";
 }
 
-String InkBridge::getWeatherForecastCondition(String date) {
-    if (weatherForecast.data.isNull()) getWeatherForecast();
+String InkBridge::getWeatherForecastCondition(String date, String location, int days) {
+    if (weatherForecast.data.isNull()) getWeatherForecast(location, days);
     JsonArray arr = weatherForecast.data["forecast"];
     for (JsonVariant v : arr) {
         if (v["date"].as<String>() == date) return v["condition"].as<String>();
@@ -433,31 +433,31 @@ Response InkBridge::getAstronomy(String location) {
     return astronomy;
 }
 
-String InkBridge::getAstronomySunrise() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["sunrise"].as<String>(); }
-String InkBridge::getAstronomySunset() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["sunset"].as<String>(); }
-String InkBridge::getAstronomyMoonrise() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["moonrise"].as<String>(); }
-String InkBridge::getAstronomyMoonset() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["moonset"].as<String>(); }
-String InkBridge::getAstronomyLocation() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["location"].as<String>(); }
-String InkBridge::getAstronomyMoonPhase() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["moon_phase"].as<String>(); }
-int InkBridge::getAstronomyMoonIllumination() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["moon_illumination"].as<int>(); }
-bool InkBridge::getAstronomyIsDaytime() { if(astronomy.data.isNull()) getAstronomy(); return astronomy.data["is_daytime"].as<bool>(); }
+String InkBridge::getAstronomySunrise(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["sunrise"].as<String>(); }
+String InkBridge::getAstronomySunset(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["sunset"].as<String>(); }
+String InkBridge::getAstronomyMoonrise(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["moonrise"].as<String>(); }
+String InkBridge::getAstronomyMoonset(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["moonset"].as<String>(); }
+String InkBridge::getAstronomyLocation(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["location"].as<String>(); }
+String InkBridge::getAstronomyMoonPhase(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["moon_phase"].as<String>(); }
+int InkBridge::getAstronomyMoonIllumination(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["moon_illumination"].as<int>(); }
+bool InkBridge::getAstronomyIsDaytime(String location) { if(astronomy.data.isNull()) getAstronomy(location); return astronomy.data["is_daytime"].as<bool>(); }
 
 // Missing History Helpers Implementation
-int InkBridge::getWeatherHistoryCount() { if(weatherHistory.data.isNull()) getWeatherHistory(); return weatherHistory.data["history"].size(); }
-String InkBridge::getWeatherHistoryLocation() { if(weatherHistory.data.isNull()) getWeatherHistory(); return weatherHistory.data["location"].as<String>(); }
-String InkBridge::getWeatherHistoryDate(int index) { if(weatherHistory.data.isNull()) getWeatherHistory(); return weatherHistory.data["history"][index]["date"].as<String>(); }
-String InkBridge::getWeatherHistoryAvgTemp(int index) { if(weatherHistory.data.isNull()) getWeatherHistory(); return weatherHistory.data["history"][index]["avg_temp"].as<String>(); }
-String InkBridge::getWeatherHistoryCondition(int index) { if(weatherHistory.data.isNull()) getWeatherHistory(); return weatherHistory.data["history"][index]["condition"].as<String>(); }
-String InkBridge::getWeatherHistoryTrend() { if(weatherHistory.data.isNull()) getWeatherHistory(); return weatherHistory.data["trend"].as<String>(); }
+int InkBridge::getWeatherHistoryCount(String location, String date) { if(weatherHistory.data.isNull()) getWeatherHistory(location, date); return weatherHistory.data["history"].size(); }
+String InkBridge::getWeatherHistoryLocation(String location, String date) { if(weatherHistory.data.isNull()) getWeatherHistory(location, date); return weatherHistory.data["location"].as<String>(); }
+String InkBridge::getWeatherHistoryDate(int index, String location, String date) { if(weatherHistory.data.isNull()) getWeatherHistory(location, date); return weatherHistory.data["history"][index]["date"].as<String>(); }
+String InkBridge::getWeatherHistoryAvgTemp(int index, String location, String date) { if(weatherHistory.data.isNull()) getWeatherHistory(location, date); return weatherHistory.data["history"][index]["avg_temp"].as<String>(); }
+String InkBridge::getWeatherHistoryCondition(int index, String location, String date) { if(weatherHistory.data.isNull()) getWeatherHistory(location, date); return weatherHistory.data["history"][index]["condition"].as<String>(); }
+String InkBridge::getWeatherHistoryTrend(String location, String date) { if(weatherHistory.data.isNull()) getWeatherHistory(location, date); return weatherHistory.data["trend"].as<String>(); }
 
-String InkBridge::getWeatherHistoryAvgTemp(String date) {
-    if (weatherHistory.data.isNull()) getWeatherHistory();
+String InkBridge::getWeatherHistoryAvgTemp(String date, String location) {
+    if (weatherHistory.data.isNull()) getWeatherHistory(location, date);
     JsonArray arr = weatherHistory.data["history"];
     for (JsonVariant v : arr) if (v["date"].as<String>() == date) return v["avg_temp"].as<String>();
     return "";
 }
-String InkBridge::getWeatherHistoryCondition(String date) {
-    if (weatherHistory.data.isNull()) getWeatherHistory();
+String InkBridge::getWeatherHistoryCondition(String date, String location) {
+    if (weatherHistory.data.isNull()) getWeatherHistory(location, date);
     JsonArray arr = weatherHistory.data["history"];
     for (JsonVariant v : arr) if (v["date"].as<String>() == date) return v["condition"].as<String>();
     return "";
@@ -494,24 +494,24 @@ Response InkBridge::getStockArray(String symbol, int days)
     return stocks;
 }
 
-double InkBridge::getStockPrice() {
-    if (stocks.data.isNull()) getStock();
+double InkBridge::getStockPrice(String symbol) {
+    if (stocks.data.isNull()) getStock(symbol);
     return stocks.data["price"].as<double>();
 }
-double InkBridge::getStockPercent() {
-    if (stocks.data.isNull()) getStock();
+double InkBridge::getStockPercent(String symbol) {
+    if (stocks.data.isNull()) getStock(symbol);
     return stocks.data["change_percent"].as<double>();
 }
-String InkBridge::getStockSymbol() {
-    if (stocks.data.isNull()) getStock();
+String InkBridge::getStockSymbol(String symbol) {
+    if (stocks.data.isNull()) getStock(symbol);
     return stocks.data["symbol"].as<String>();
 }
-double InkBridge::getStockHigh() {
-    if (stocks.data.isNull()) getStock();
+double InkBridge::getStockHigh(String symbol) {
+    if (stocks.data.isNull()) getStock(symbol);
     return stocks.data["day_high"].as<double>();
 }
-double InkBridge::getStockLow() {
-    if (stocks.data.isNull()) getStock();
+double InkBridge::getStockLow(String symbol) {
+    if (stocks.data.isNull()) getStock(symbol);
     return stocks.data["day_low"].as<double>();
 }
 #endif
@@ -546,20 +546,20 @@ Response InkBridge::getCryptoArray(String symbol, int days)
     return crypto;
 }
 
-double InkBridge::getCryptoPrice() {
-    if (crypto.data.isNull()) getCrypto("");
+double InkBridge::getCryptoPrice(String symbol) {
+    if (crypto.data.isNull()) getCrypto(symbol);
     return crypto.data["price"].as<double>();
 }
-double InkBridge::getCryptoPercent() {
-    if (crypto.data.isNull()) getCrypto("");
+double InkBridge::getCryptoPercent(String symbol) {
+    if (crypto.data.isNull()) getCrypto(symbol);
     return crypto.data["change_percent"].as<double>();
 }
-String InkBridge::getCryptoSymbol() {
-    if (crypto.data.isNull()) getCrypto("");
+String InkBridge::getCryptoSymbol(String symbol) {
+    if (crypto.data.isNull()) getCrypto(symbol);
     return crypto.data["symbol"].as<String>();
 }
-String InkBridge::getCryptoName() {
-    if (crypto.data.isNull()) getCrypto("");
+String InkBridge::getCryptoName(String symbol) {
+    if (crypto.data.isNull()) getCrypto(symbol);
     return crypto.data["name"].as<String>();
 }
 #endif
@@ -578,16 +578,16 @@ Response InkBridge::getNews(String category)
     return news;
 }
 
-int InkBridge::getNewsArticleCount() {
-    if (news.data.isNull()) getNews("general");
+int InkBridge::getNewsArticleCount(String category) {
+    if (news.data.isNull()) getNews(category);
     return news.data["articles"].size();
 }
-String InkBridge::getNewsArticleTitle(int index) {
-    if (news.data.isNull()) getNews("general");
+String InkBridge::getNewsArticleTitle(int index, String category) {
+    if (news.data.isNull()) getNews(category);
     return news.data["articles"][index]["title"].as<String>();
 }
-String InkBridge::getNewsArticleSource(int index) {
-    if (news.data.isNull()) getNews("general");
+String InkBridge::getNewsArticleSource(int index, String category) {
+    if (news.data.isNull()) getNews(category);
     return news.data["articles"][index]["source"]["name"].as<String>();
 }
 #endif
@@ -606,20 +606,20 @@ Response InkBridge::getCalendar(String range)
     return calendar;
 }
 
-int InkBridge::getCalendarEventCount() {
-    if (calendar.data.isNull()) getCalendar("1d");
+int InkBridge::getCalendarEventCount(String range) {
+    if (calendar.data.isNull()) getCalendar(range);
     return calendar.data["events"].size();
 }
-String InkBridge::getCalendarEventTime(int index) {
-    if (calendar.data.isNull()) getCalendar("1d");
+String InkBridge::getCalendarEventTime(int index, String range) {
+    if (calendar.data.isNull()) getCalendar(range);
     return calendar.data["events"][index]["start"].as<String>();
 }
-String InkBridge::getCalendarEventTitle(int index) {
-    if (calendar.data.isNull()) getCalendar("1d");
+String InkBridge::getCalendarEventTitle(int index, String range) {
+    if (calendar.data.isNull()) getCalendar(range);
     return calendar.data["events"][index]["summary"].as<String>();
 }
-String InkBridge::getCalendarEventLocation(int index) {
-    if (calendar.data.isNull()) getCalendar("1d");
+String InkBridge::getCalendarEventLocation(int index, String range) {
+    if (calendar.data.isNull()) getCalendar(range);
     return calendar.data["events"][index]["location"].as<String>();
 }
 #endif
@@ -642,24 +642,24 @@ Response InkBridge::getTravel(String origin, String destination, String mode)
     return travel;
 }
 
-String InkBridge::getTravelDuration() {
-    if (travel.data.isNull()) return "";
+String InkBridge::getTravelDuration(String origin, String destination, String mode) {
+    if (travel.data.isNull()) getTravel(origin, destination, mode);
     return travel.data["duration_traffic_text"].as<String>();
 }
-String InkBridge::getTravelDistance() {
-    if (travel.data.isNull()) return "";
+String InkBridge::getTravelDistance(String origin, String destination, String mode) {
+    if (travel.data.isNull()) getTravel(origin, destination, mode);
     return travel.data["distance_text"].as<String>();
 }
-String InkBridge::getTravelOrigin() {
-    if (travel.data.isNull()) return "";
+String InkBridge::getTravelOrigin(String origin, String destination, String mode) {
+    if (travel.data.isNull()) getTravel(origin, destination, mode);
     return travel.data["start_address"].as<String>();
 }
-String InkBridge::getTravelDestination() {
-    if (travel.data.isNull()) return "";
+String InkBridge::getTravelDestination(String origin, String destination, String mode) {
+    if (travel.data.isNull()) getTravel(origin, destination, mode);
     return travel.data["end_address"].as<String>();
 }
-String InkBridge::getTravelMode() {
-    if (travel.data.isNull()) return "";
+String InkBridge::getTravelMode(String origin, String destination, String mode) {
+    if (travel.data.isNull()) getTravel(origin, destination, mode);
     return travel.data["mode"].as<String>();
 }
 #endif
@@ -688,14 +688,14 @@ Response InkBridge::getCanvas(String type, String domain, String canvasApiKey)
     }
 }
 
-Response InkBridge::getCanvasAssignment(int index) {
-    if (canvasTodos.data.isNull()) getCanvas("todo", "", "");
+Response InkBridge::getCanvasAssignment(int index, String domain, String canvasApiKey) {
+    if (canvasTodos.data.isNull()) getCanvas("todo", domain, canvasApiKey);
     Response r; r.status = "OK"; r.data = canvasTodos.data[index];
     return r;
 }
 
-Response InkBridge::getCanvasAssignment(String id) {
-    if (canvasTodos.data.isNull()) getCanvas("todo", "", "");
+Response InkBridge::getCanvasAssignment(String id, String domain, String canvasApiKey) {
+    if (canvasTodos.data.isNull()) getCanvas("todo", domain, canvasApiKey);
     Response r; r.status = "NOT_FOUND";
     JsonArray arr = canvasTodos.data.as<JsonArray>();
     for(JsonVariant v : arr) {
@@ -706,38 +706,38 @@ Response InkBridge::getCanvasAssignment(String id) {
     return r;
 }
 
-String InkBridge::getCanvasAssignmentName(int index) {
-    if (canvasTodos.data.isNull()) getCanvas("todo", "", "");
+String InkBridge::getCanvasAssignmentName(int index, String domain, String canvasApiKey) {
+    if (canvasTodos.data.isNull()) getCanvas("todo", domain, canvasApiKey);
     return canvasTodos.data[index]["name"].as<String>();
 }
-String InkBridge::getCanvasAssignmentName(String id) {
-    Response r = getCanvasAssignment(id);
+String InkBridge::getCanvasAssignmentName(String id, String domain, String canvasApiKey) {
+    Response r = getCanvasAssignment(id, domain, canvasApiKey);
     return r.data["name"].as<String>();
 }
-String InkBridge::getCanvasAssignmentDueDate(int index) {
-    if (canvasTodos.data.isNull()) getCanvas("todo", "", "");
+String InkBridge::getCanvasAssignmentDueDate(int index, String domain, String canvasApiKey) {
+    if (canvasTodos.data.isNull()) getCanvas("todo", domain, canvasApiKey);
     return canvasTodos.data[index]["due_at"].as<String>();
 }
-String InkBridge::getCanvasAssignmentDueDate(String id) {
-    Response r = getCanvasAssignment(id);
+String InkBridge::getCanvasAssignmentDueDate(String id, String domain, String canvasApiKey) {
+    Response r = getCanvasAssignment(id, domain, canvasApiKey);
     return r.data["due_at"].as<String>();
 }
-String InkBridge::getCanvasAssignmentType(int index) {
-    if (canvasTodos.data.isNull()) getCanvas("todo", "", "");
+String InkBridge::getCanvasAssignmentType(int index, String domain, String canvasApiKey) {
+    if (canvasTodos.data.isNull()) getCanvas("todo", domain, canvasApiKey);
     return canvasTodos.data[index]["type"].as<String>();
 }
-String InkBridge::getCanvasAssignmentType(String id) {
-    Response r = getCanvasAssignment(id);
+String InkBridge::getCanvasAssignmentType(String id, String domain, String canvasApiKey) {
+    Response r = getCanvasAssignment(id, domain, canvasApiKey);
     return r.data["type"].as<String>();
 }
 
-Response InkBridge::getCanvasGradeSet(int index) {
-    if (canvasGrades.data.isNull()) getCanvas("grades", "", "");
+Response InkBridge::getCanvasGradeSet(int index, String domain, String canvasApiKey) {
+    if (canvasGrades.data.isNull()) getCanvas("grades", domain, canvasApiKey);
     Response r; r.status = "OK"; r.data = canvasGrades.data[index];
     return r;
 }
-Response InkBridge::getCanvasGradeSet(String course) {
-    if (canvasGrades.data.isNull()) getCanvas("grades", "", "");
+Response InkBridge::getCanvasGradeSet(String course, String domain, String canvasApiKey) {
+    if (canvasGrades.data.isNull()) getCanvas("grades", domain, canvasApiKey);
     Response r; r.status = "NOT_FOUND";
     JsonArray arr = canvasGrades.data.as<JsonArray>();
     for(JsonVariant v : arr) {
@@ -747,29 +747,29 @@ Response InkBridge::getCanvasGradeSet(String course) {
     }
     return r;
 }
-String InkBridge::getCanvasLetterGrade(int index) {
-    if (canvasGrades.data.isNull()) getCanvas("grades", "", "");
+String InkBridge::getCanvasLetterGrade(int index, String domain, String canvasApiKey) {
+    if (canvasGrades.data.isNull()) getCanvas("grades", domain, canvasApiKey);
     return canvasGrades.data[index]["grade"].as<String>();
 }
-String InkBridge::getCanvasLetterGrade(String course) {
-    Response r = getCanvasGradeSet(course);
+String InkBridge::getCanvasLetterGrade(String course, String domain, String canvasApiKey) {
+    Response r = getCanvasGradeSet(course, domain, canvasApiKey);
     return r.data["grade"].as<String>();
 }
-int InkBridge::getCanvasNumericGrade(int index) {
-    if (canvasGrades.data.isNull()) getCanvas("grades", "", "");
+int InkBridge::getCanvasNumericGrade(int index, String domain, String canvasApiKey) {
+    if (canvasGrades.data.isNull()) getCanvas("grades", domain, canvasApiKey);
     return canvasGrades.data[index]["score"].as<int>();
 }
-int InkBridge::getCanvasNumericGrade(String course) {
-    Response r = getCanvasGradeSet(course);
+int InkBridge::getCanvasNumericGrade(String course, String domain, String canvasApiKey) {
+    Response r = getCanvasGradeSet(course, domain, canvasApiKey);
     return r.data["score"].as<int>();
 }
 
-double InkBridge::getGPAEstimate(bool weighted, double Aplus, double A, double Aminus,
+double InkBridge::getGPAEstimate(bool weighted, String domain, String canvasApiKey, double Aplus, double A, double Aminus,
                         double Bplus, double B, double Bminus,
                         double Cplus, double C, double Cminus,
                         double Dplus, double D, double Dminus,
                         double F) {
-    if (canvasGrades.data.isNull()) getCanvas("grades", "", "");
+    if (canvasGrades.data.isNull()) getCanvas("grades", domain, canvasApiKey);
     double total = 0; int count = 0;
     JsonArray arr = canvasGrades.data.as<JsonArray>();
     for(JsonVariant v : arr) {

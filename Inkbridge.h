@@ -41,42 +41,42 @@ public:
 
 #if INK_ENABLE_WEATHER
   Response getWeather(String location = "");
-  double getWeatherTemperature();
-  String getWeatherCondition();
-  String getWeatherDescription();
-  String getWeatherLocation();
+  double getWeatherTemperature(String location = "");
+  String getWeatherCondition(String location = "");
+  String getWeatherDescription(String location = "");
+  String getWeatherLocation(String location = "");
 
   Response getWeatherForecast(String location = "", int days = 3);
-  int getWeatherForcastDayCount();
-  String getWeatherForcastLocation();
-  String getWeatherForecastDate(int index);
-  String getWeatherForecastMinTemp(String date);
-  String getWeatherForecastMinTemp(int index);
-  String getWeatherForecastMaxTemp(String date);
-  String getWeatherForecastMaxTemp(int index);
-  String getWeatherForecastCondition(String date);
-  String getWeatherForecastCondition(int index);
-  String getWeatherForcastTrend();
+  int getWeatherForcastDayCount(String location = "", int days = 3);
+  String getWeatherForcastLocation(String location = "", int days = 3);
+  String getWeatherForecastDate(int index, String location = "", int days = 3);
+  String getWeatherForecastMinTemp(String date, String location = "", int days = 3);
+  String getWeatherForecastMinTemp(int index, String location = "", int days = 3);
+  String getWeatherForecastMaxTemp(String date, String location = "", int days = 3);
+  String getWeatherForecastMaxTemp(int index, String location = "", int days = 3);
+  String getWeatherForecastCondition(String date, String location = "", int days = 3);
+  String getWeatherForecastCondition(int index, String location = "", int days = 3);
+  String getWeatherForcastTrend(String location = "", int days = 3);
 
   Response getWeatherHistory(String location = "", String date = ""); // date format: YYYY-MM-DD
-  int getWeatherHistoryCount();
-  String getWeatherHistoryLocation();
-  String getWeatherHistoryDate(int index);
-  String getWeatherHistoryAvgTemp(String date);
-  String getWeatherHistoryAvgTemp(int index);
-  String getWeatherHistoryCondition(String date);
-  String getWeatherHistoryCondition(int index);
-  String getWeatherHistoryTrend();
+  int getWeatherHistoryCount(String location = "", String date = "");
+  String getWeatherHistoryLocation(String location = "", String date = "");
+  String getWeatherHistoryDate(int index, String location = "", String date = "");
+  String getWeatherHistoryAvgTemp(String date, String location = "");
+  String getWeatherHistoryAvgTemp(int index, String location = "", String date = "");
+  String getWeatherHistoryCondition(String date, String location = "");
+  String getWeatherHistoryCondition(int index, String location = "", String date = "");
+  String getWeatherHistoryTrend(String location = "", String date = "");
 
   Response getAstronomy(String location = ""); 
-  String getAstronomySunrise();
-  String getAstronomySunset();
-  String getAstronomyMoonrise();
-  String getAstronomyMoonset();
-  String getAstronomyLocation();
-  String getAstronomyMoonPhase();
-  int getAstronomyMoonIllumination();
-  bool getAstronomyIsDaytime();
+  String getAstronomySunrise(String location = "");
+  String getAstronomySunset(String location = "");
+  String getAstronomyMoonrise(String location = "");
+  String getAstronomyMoonset(String location = "");
+  String getAstronomyLocation(String location = "");
+  String getAstronomyMoonPhase(String location = "");
+  int getAstronomyMoonIllumination(String location = "");
+  bool getAstronomyIsDaytime(String location = "");
 
   Response weatherHistory;
   Response weatherForecast;
@@ -86,11 +86,11 @@ public:
 
 #if INK_ENABLE_STOCKS
   Response getStock(String symbol = "");
-  double getStockPrice();
-  double getStockPercent();
-  String getStockSymbol();
-  double getStockHigh();
-  double getStockLow();
+  double getStockPrice(String symbol = "");
+  double getStockPercent(String symbol = "");
+  String getStockSymbol(String symbol = "");
+  double getStockHigh(String symbol = "");
+  double getStockLow(String symbol = "");
 
   Response getStockArray(String symbol = "", int days = 7);
   Response stocks;
@@ -98,10 +98,10 @@ public:
 
 #if INK_ENABLE_CRYPTO
   Response getCrypto(String symbol);
-  double getCryptoPrice();
-  double getCryptoPercent();
-  String getCryptoSymbol();
-  String getCryptoName();
+  double getCryptoPrice(String symbol = "");
+  double getCryptoPercent(String symbol = "");
+  String getCryptoSymbol(String symbol = "");
+  String getCryptoName(String symbol = "");
 
   Response getCryptoArray(String symbol, int days);
   Response crypto;
@@ -109,49 +109,49 @@ public:
 
 #if INK_ENABLE_NEWS
   Response getNews(String category);
-  int getNewsArticleCount();
-  String getNewsArticleTitle(int index);
-  String getNewsArticleSource(int index);
+  int getNewsArticleCount(String category = "general");
+  String getNewsArticleTitle(int index, String category = "general");
+  String getNewsArticleSource(int index, String category = "general");
 
   Response news;
 #endif
 
 #if INK_ENABLE_CALENDAR
   Response getCalendar(String range);
-  int getCalendarEventCount();
-  String getCalendarEventTime(int index);
-  String getCalendarEventTitle(int index);
-  String getCalendarEventLocation(int index);
+  int getCalendarEventCount(String range = "1d");
+  String getCalendarEventTime(int index, String range = "1d");
+  String getCalendarEventTitle(int index, String range = "1d");
+  String getCalendarEventLocation(int index, String range = "1d");
   Response calendar;
 #endif
 
 #if INK_ENABLE_TRAVEL
   Response getTravel(String origin, String destination, String mode);
-  String getTravelDuration();
-  String getTravelDistance();
-  String getTravelOrigin();
-  String getTravelDestination();
-  String getTravelMode();
+  String getTravelDuration(String origin = "", String destination = "", String mode = "driving");
+  String getTravelDistance(String origin = "", String destination = "", String mode = "driving");
+  String getTravelOrigin(String origin = "", String destination = "", String mode = "driving");
+  String getTravelDestination(String origin = "", String destination = "", String mode = "driving");
+  String getTravelMode(String origin = "", String destination = "", String mode = "driving");
   Response travel;
 #endif
 
 #if INK_ENABLE_CANVAS
   Response getCanvas(String type, String domain, String canvasApiKey); // type: "todo" or "grades"
-  Response getCanvasAssignment(String id);
-  Response getCanvasAssignment(int index);
-  String getCanvasAssignmentName(String id);
-  String getCanvasAssignmentName(int index);
-  String getCanvasAssignmentDueDate(String id);
-  String getCanvasAssignmentDueDate(int index);
-  String getCanvasAssignmentType(String id);
-  String getCanvasAssignmentType(int index);
-  Response getCanvasGradeSet(String course);
-  Response getCanvasGradeSet(int index);
-  String getCanvasLetterGrade(String course);
-  String getCanvasLetterGrade(int index);
-  int getCanvasNumericGrade(String course);
-  int getCanvasNumericGrade(int index);
-  double getGPAEstimate(bool weighted = false, double Aplus = 4.0, double A = 4.0, double Aminus = 3.7,
+  Response getCanvasAssignment(String id, String domain = "", String canvasApiKey = "");
+  Response getCanvasAssignment(int index, String domain = "", String canvasApiKey = "");
+  String getCanvasAssignmentName(String id, String domain = "", String canvasApiKey = "");
+  String getCanvasAssignmentName(int index, String domain = "", String canvasApiKey = "");
+  String getCanvasAssignmentDueDate(String id, String domain = "", String canvasApiKey = "");
+  String getCanvasAssignmentDueDate(int index, String domain = "", String canvasApiKey = "");
+  String getCanvasAssignmentType(String id, String domain = "", String canvasApiKey = "");
+  String getCanvasAssignmentType(int index, String domain = "", String canvasApiKey = "");
+  Response getCanvasGradeSet(String course, String domain = "", String canvasApiKey = "");
+  Response getCanvasGradeSet(int index, String domain = "", String canvasApiKey = "");
+  String getCanvasLetterGrade(String course, String domain = "", String canvasApiKey = "");
+  String getCanvasLetterGrade(int index, String domain = "", String canvasApiKey = "");
+  int getCanvasNumericGrade(String course, String domain = "", String canvasApiKey = "");
+  int getCanvasNumericGrade(int index, String domain = "", String canvasApiKey = "");
+  double getGPAEstimate(bool weighted = false, String domain = "", String canvasApiKey = "", double Aplus = 4.0, double A = 4.0, double Aminus = 3.7,
                         double Bplus = 3.3, double B = 3.0, double Bminus = 2.7,
                         double Cplus = 2.3, double C = 2.0, double Cminus = 1.7,
                         double Dplus = 1.3, double D = 1.0, double Dminus = 0.7,

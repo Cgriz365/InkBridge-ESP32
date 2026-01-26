@@ -123,22 +123,22 @@ Fetches current weather data.
 - **Returns**: Response object
 
 **Helpers:**
-- `double getWeatherTemperature()`
-- `String getWeatherCondition()`
-- `String getWeatherDescription()`
-- `String getWeatherLocation()`
+- `double getWeatherTemperature(String location = "")`
+- `String getWeatherCondition(String location = "")`
+- `String getWeatherDescription(String location = "")`
+- `String getWeatherLocation(String location = "")`
 
 #### `Response getWeatherForecast(String location = "", int days = 3)`
 Fetches weather forecast.
 
 **Helpers:**
-- `int getWeatherForcastDayCount()`
-- `String getWeatherForcastLocation()`
-- `String getWeatherForecastDate(int index)`
-- `String getWeatherForecastMinTemp(int index)` or `(String date)`
-- `String getWeatherForecastMaxTemp(int index)` or `(String date)`
-- `String getWeatherForecastCondition(int index)` or `(String date)`
-- `String getWeatherForcastTrend()`
+- `int getWeatherForcastDayCount(String location = "", int days = 3)`
+- `String getWeatherForcastLocation(String location = "", int days = 3)`
+- `String getWeatherForecastDate(int index, String location = "", int days = 3)`
+- `String getWeatherForecastMinTemp(int index, String location = "", int days = 3)` or `(String date, String location = "", int days = 3)`
+- `String getWeatherForecastMaxTemp(int index, String location = "", int days = 3)` or `(String date, String location = "", int days = 3)`
+- `String getWeatherForecastCondition(int index, String location = "", int days = 3)` or `(String date, String location = "", int days = 3)`
+- `String getWeatherForcastTrend(String location = "", int days = 3)`
 
 #### `Response getWeatherHistory(String location = "", String date = "")`
 Fetches historical weather data.
@@ -146,25 +146,25 @@ Fetches historical weather data.
 - **date**: Date in YYYY-MM-DD format
 
 **Helpers:**
-- `int getWeatherHistoryCount()`
-- `String getWeatherHistoryLocation()`
-- `String getWeatherHistoryDate(int index)`
-- `String getWeatherHistoryAvgTemp(int index)` or `(String date)`
-- `String getWeatherHistoryCondition(int index)` or `(String date)`
-- `String getWeatherHistoryTrend()`
+- `int getWeatherHistoryCount(String location = "", String date = "")`
+- `String getWeatherHistoryLocation(String location = "", String date = "")`
+- `String getWeatherHistoryDate(int index, String location = "", String date = "")`
+- `String getWeatherHistoryAvgTemp(int index, String location = "", String date = "")` or `(String date, String location = "")`
+- `String getWeatherHistoryCondition(int index, String location = "", String date = "")` or `(String date, String location = "")`
+- `String getWeatherHistoryTrend(String location = "", String date = "")`
 
 #### `Response getAstronomy(String location = "")`
 Fetches astronomy data.
 
 **Helpers:**
-- `String getAstronomySunrise()`
-- `String getAstronomySunset()`
-- `String getAstronomyMoonrise()`
-- `String getAstronomyMoonset()`
-- `String getAstronomyLocation()`
-- `String getAstronomyMoonPhase()`
-- `int getAstronomyMoonIllumination()`
-- `bool getAstronomyIsDaytime()`
+- `String getAstronomySunrise(String location = "")`
+- `String getAstronomySunset(String location = "")`
+- `String getAstronomyMoonrise(String location = "")`
+- `String getAstronomyMoonset(String location = "")`
+- `String getAstronomyLocation(String location = "")`
+- `String getAstronomyMoonPhase(String location = "")`
+- `int getAstronomyMoonIllumination(String location = "")`
+- `bool getAstronomyIsDaytime(String location = "")`
 
 ### Stocks & Crypto
 
@@ -174,11 +174,11 @@ Fetches current stock data.
 - **Returns**: Response object
 
 **Helpers:**
-- `double getStockPrice()`
-- `double getStockPercent()`
-- `String getStockSymbol()`
-- `double getStockHigh()`
-- `double getStockLow()`
+- `double getStockPrice(String symbol = "")`
+- `double getStockPercent(String symbol = "")`
+- `String getStockSymbol(String symbol = "")`
+- `double getStockHigh(String symbol = "")`
+- `double getStockLow(String symbol = "")`
 
 #### `Response getCrypto(String symbol = "")`
 Fetches current cryptocurrency data.
@@ -186,10 +186,10 @@ Fetches current cryptocurrency data.
 - **Returns**: Response object
 
 **Helpers:**
-- `double getCryptoPrice()`
-- `double getCryptoPercent()`
-- `String getCryptoSymbol()`
-- `String getCryptoName()`
+- `double getCryptoPrice(String symbol = "")`
+- `double getCryptoPercent(String symbol = "")`
+- `String getCryptoSymbol(String symbol = "")`
+- `String getCryptoName(String symbol = "")`
 
 #### `Response getStockArray(String symbol = "", int days = 7)`
 Fetches historical stock data.
@@ -205,9 +205,9 @@ Fetches news articles.
 - **Returns**: Response object
 
 **Helpers:**
-- `int getNewsArticleCount()`
-- `String getNewsArticleTitle(int index)`
-- `String getNewsArticleSource(int index)`
+- `int getNewsArticleCount(String category = "general")`
+- `String getNewsArticleTitle(int index, String category = "general")`
+- `String getNewsArticleSource(int index, String category = "general")`
 
 #### `Response getCalendar(String range)`
 Fetches calendar events.
@@ -215,10 +215,10 @@ Fetches calendar events.
 - **Returns**: Response object
 
 **Helpers:**
-- `int getCalendarEventCount()`
-- `String getCalendarEventTitle(int index)`
-- `String getCalendarEventTime(int index)`
-- `String getCalendarEventLocation(int index)`
+- `int getCalendarEventCount(String range = "1d")`
+- `String getCalendarEventTitle(int index, String range = "1d")`
+- `String getCalendarEventTime(int index, String range = "1d")`
+- `String getCalendarEventLocation(int index, String range = "1d")`
 
 ### Travel
 
@@ -230,11 +230,11 @@ Fetches travel/route information.
 - **Returns**: Response object
 
 **Helpers:**
-- `String getTravelDuration()`
-- `String getTravelDistance()`
-- `String getTravelOrigin()`
-- `String getTravelDestination()`
-- `String getTravelMode()`
+- `String getTravelDuration(String origin = "", String destination = "", String mode = "driving")`
+- `String getTravelDistance(String origin = "", String destination = "", String mode = "driving")`
+- `String getTravelOrigin(String origin = "", String destination = "", String mode = "driving")`
+- `String getTravelDestination(String origin = "", String destination = "", String mode = "driving")`
+- `String getTravelMode(String origin = "", String destination = "", String mode = "driving")`
 
 ### Canvas
 
@@ -246,14 +246,14 @@ Fetches custom canvas data.
 - **Returns**: Response object
 
 **Helpers:**
-- `Response getCanvasAssignment(String id)` or `(int index)`
-- `String getCanvasAssignmentName(String id)` or `(int index)`
-- `String getCanvasAssignmentDueDate(String id)` or `(int index)`
-- `String getCanvasAssignmentType(String id)` or `(int index)`
-- `Response getCanvasGradeSet(String course)` or `(int index)`
-- `String getCanvasLetterGrade(String course)` or `(int index)`
-- `int getCanvasNumericGrade(String course)` or `(int index)`
-- `double getGPAEstimate(bool weighted, ...)`
+- `Response getCanvasAssignment(String id, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `String getCanvasAssignmentName(String id, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `String getCanvasAssignmentDueDate(String id, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `String getCanvasAssignmentType(String id, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `Response getCanvasGradeSet(String course, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `String getCanvasLetterGrade(String course, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `int getCanvasNumericGrade(String course, String domain = "", String canvasApiKey = "")` or `(int index, String domain = "", String canvasApiKey = "")`
+- `double getGPAEstimate(bool weighted, String domain = "", String canvasApiKey = "", ...)`
 
 ### Spotify Integration
 
@@ -319,10 +319,12 @@ if (r.status == "OK") {
 
 ### Stock Prices
 ```cpp
-String stock = ink.getStock("AAPL");
-JsonDocument doc;
-deserializeJson(doc, stock);
-float price = doc["price"];
+// Using helper
+double price = ink.getStockPrice();
+
+// Or manual fetch
+Response r = ink.getStock("AAPL");
+double price = r.data["price"];
 ```
 
 ### Spotify Playback
@@ -342,10 +344,20 @@ ink.spotifyPlayback("next");
 
 ### Calendar Events
 ```cpp
-String events = ink.getCalendar("today");
-JsonDocument doc;
-deserializeJson(doc, events);
-String firstEvent = doc["events"][0]["title"];
+// Using helper
+int count = ink.getCalendarEventCount();
+if (count > 0) {
+    String title = ink.getCalendarEventTitle(0);
+}
+```
+
+### Canvas GPA Estimator
+```cpp
+// Calculate unweighted GPA (using default 4.0 scale)
+double gpa = ink.getGPAEstimate(false);
+
+// Calculate weighted GPA
+double weightedGpa = ink.getGPAEstimate(true);
 ```
 
 ## Configuration Storage
