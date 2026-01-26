@@ -10,6 +10,7 @@ A comprehensive Arduino library for ESP32 devices that provides seamless integra
 - **HTTPS Support**: Secure communication with cloud APIs
 - **Multiple Data Sources**: Weather, stocks, crypto, news, calendar, travel, and Spotify integration
 - **Retry Logic**: Built-in HTTP request retry mechanism
+- **Memory Efficient**: Modular feature flags to disable unused integrations
 - **Factory Reset**: Option to reset device configuration
 
 ## Installation
@@ -20,6 +21,19 @@ A comprehensive Arduino library for ESP32 devices that provides seamless integra
    - `HTTPClient.h`
    - `ArduinoJson.h`
    - `NVSManager.h` (included with library)
+
+### Feature Flags
+To save memory, you can disable unused integrations by modifying `Inkbridge.h`:
+```cpp
+#define INK_ENABLE_WEATHER 1
+#define INK_ENABLE_STOCKS 1
+#define INK_ENABLE_CRYPTO 1
+#define INK_ENABLE_NEWS 1
+#define INK_ENABLE_CALENDAR 1
+#define INK_ENABLE_TRAVEL 1
+#define INK_ENABLE_CANVAS 1
+#define INK_ENABLE_SPOTIFY 1
+```
 
 ## Quick Start
 ```cpp
@@ -51,6 +65,15 @@ void setup() {
 ```
 
 ## API Reference
+
+### Response Object
+Most methods return a `Response` struct containing the status and parsed JSON data:
+```cpp
+struct Response {
+  String status;      // e.g., "OK", "HTTP_ERROR_404", "WIFI_DISCONNECTED"
+  JsonDocument data;  // Parsed ArduinoJson document
+};
+```
 
 ### Initialization
 
@@ -94,101 +117,149 @@ Retrieves the friendly user ID.
 
 ### Weather
 
-#### `String getWeather(String location = "")`
-Fetches weather data.
+#### `Response getWeather(String location = "")`
+Fetches current weather data.
 - **location**: Optional location override
-- **Returns**: JSON response with weather data
+- **Returns**: Response object
+
+**Helpers:**
+- `double getWeatherTemperature()`
+- `String getWeatherCondition()`
+- `String getWeatherDescription()`
+- `String getWeatherLocation()`
+
+#### `Response getWeatherForecast(String location = "", int days = 3)`
+Fetches weather forecast.
+
+**Helpers:**
+- `String getWeatherForecastMinTemp(int index)`
+- `String getWeatherForecastMaxTemp(int index)`
+- `String getWeatherForecastCondition(int index)`
+
+#### `Response getAstronomy(String location = "")`
+Fetches astronomy data.
+
+**Helpers:**
+- `String getAstronomySunrise()`
+- `String getAstronomySunset()`
+- `String getAstronomyMoonPhase()`
 
 ### Stocks & Crypto
 
-#### `String getStock(String symbol = "")`
+#### `Response getStock(String symbol = "")`
 Fetches current stock data.
 - **symbol**: Optional stock symbol (e.g., "AAPL")
-- **Returns**: JSON response with stock data
+- **Returns**: Response object
 
-#### `String getCrypto(String symbol = "")`
+**Helpers:**
+- `double getStockPrice()`
+- `double getStockPercent()`
+- `String getStockSymbol()`
+
+#### `Response getCrypto(String symbol = "")`
 Fetches current cryptocurrency data.
 - **symbol**: Optional crypto symbol (e.g., "BTC")
-- **Returns**: JSON response with crypto data
+- **Returns**: Response object
 
-#### `String getStockArray(String symbol = "", int days = 7)`
+**Helpers:**
+- `double getCryptoPrice()`
+- `double getCryptoPercent()`
+
+#### `Response getStockArray(String symbol = "", int days = 7)`
 Fetches historical stock data.
-- **symbol**: Optional stock symbol
-- **days**: Number of days of historical data
-- **Returns**: JSON response with stock price array
 
-#### `String getCryptoArray(String symbol = "", int days = 7)`
+#### `Response getCryptoArray(String symbol = "", int days = 7)`
 Fetches historical cryptocurrency data.
-- **symbol**: Optional crypto symbol
-- **days**: Number of days of historical data
-- **Returns**: JSON response with crypto price array
 
 ### News & Calendar
 
-#### `String getNews(String category)`
+#### `Response getNews(String category)`
 Fetches news articles.
 - **category**: News category (e.g., "technology", "business")
-- **Returns**: JSON response with news articles
+- **Returns**: Response object
 
-#### `String getCalendar(String range)`
+**Helpers:**
+- `int getNewsArticleCount()`
+- `String getNewsArticleTitle(int index)`
+- `String getNewsArticleSource(int index)`
+
+#### `Response getCalendar(String range)`
 Fetches calendar events.
 - **range**: Time range (e.g., "today", "week", "month")
-- **Returns**: JSON response with calendar events
+- **Returns**: Response object
+
+**Helpers:**
+- `int getCalendarEventCount()`
+- `String getCalendarEventTitle(int index)`
+- `String getCalendarEventTime(int index)`
+- `String getCalendarEventLocation(int index)`
 
 ### Travel
 
-#### `String getTravel(String origin = "", String destination = "", String mode = "driving")`
+#### `Response getTravel(String origin = "", String destination = "", String mode = "driving")`
 Fetches travel/route information.
 - **origin**: Starting location
 - **destination**: Destination location
 - **mode**: Travel mode ("driving", "walking", "transit")
-- **Returns**: JSON response with travel data
+- **Returns**: Response object
+
+**Helpers:**
+- `String getTravelDuration()`
+- `String getTravelDistance()`
 
 ### Canvas
 
-#### `String getCanvas(String type)`
+#### `Response getCanvas(String type, String domain, String canvasApiKey)`
 Fetches custom canvas data.
-- **type**: Canvas type identifier
-- **Returns**: JSON response with canvas data
+- **type**: "todo" or "grades"
+- **domain**: Canvas domain (optional if cached)
+- **canvasApiKey**: Canvas API key (optional if cached)
+- **Returns**: Response object
+
+**Helpers:**
+- `String getCanvasAssignmentName(int index)`
+- `String getCanvasAssignmentDueDate(int index)`
+- `String getCanvasLetterGrade(String course)`
+- `double getGPAEstimate(bool weighted, ...)`
 
 ### Spotify Integration
 
-#### `String spotifyRequest(String endpoint, String method = "GET", String body = "")`
+#### `Response spotifyRequest(String endpoint, String method = "GET", String body = "")`
 Makes a raw Spotify API request.
 - **endpoint**: Spotify API endpoint
 - **method**: HTTP method ("GET", "POST", "PUT")
 - **body**: Optional JSON body for POST/PUT requests
-- **Returns**: JSON response from Spotify API
+- **Returns**: Response object
 
-#### `String getSpotifyAlbums(int limit = 20, int offset = 0)`
+#### `Response getSpotifyAlbums(int limit = 20, int offset = 0)`
 Fetches user's saved albums.
 - **limit**: Number of albums to fetch
 - **offset**: Pagination offset
-- **Returns**: JSON response with albums
+- **Returns**: Response object
 
-#### `String getSpotifyPlaylists(int limit = 20, int offset = 0)`
+#### `Response getSpotifyPlaylists(int limit = 20, int offset = 0)`
 Fetches user's playlists.
 - **limit**: Number of playlists to fetch
 - **offset**: Pagination offset
-- **Returns**: JSON response with playlists
+- **Returns**: Response object
 
-#### `String getSpotifyLikedSongs(int limit = 20, int offset = 0)`
+#### `Response getSpotifyLikedSongs(int limit = 20, int offset = 0)`
 Fetches user's liked songs.
 - **limit**: Number of songs to fetch
 - **offset**: Pagination offset
-- **Returns**: JSON response with liked songs
+- **Returns**: Response object
 
-#### `String getSpotifyFollowedArtists(int limit = 20, String after = "")`
+#### `Response getSpotifyFollowedArtists(int limit = 20, String after = "")`
 Fetches user's followed artists.
 - **limit**: Number of artists to fetch
 - **after**: Cursor for pagination
-- **Returns**: JSON response with followed artists
+- **Returns**: Response object
 
-#### `String getSpotifyDevices()`
+#### `Response getSpotifyDevices()`
 Fetches available Spotify playback devices.
-- **Returns**: JSON response with device list
+- **Returns**: Response object
 
-#### `String spotifyPlayback(String action, String uri = "", int volume = -1, int position = -1, String state = "", String targetDeviceId = "")`
+#### `Response spotifyPlayback(String action, String uri = "", int volume = -1, int position = -1, String state = "", String targetDeviceId = "")`
 Controls Spotify playback.
 - **action**: Playback action ("play", "pause", "next", "previous", "volume", "seek", "transfer")
 - **uri**: Optional Spotify URI to play
@@ -196,16 +267,21 @@ Controls Spotify playback.
 - **position**: Seek position in ms, -1 to ignore
 - **state**: Playback state ("playing", "paused")
 - **targetDeviceId**: Device ID to transfer playback to
-- **Returns**: JSON response with playback status
+- **Returns**: Response object
 
 ## Usage Examples
 
 ### Weather Data
 ```cpp
-String weather = ink.getWeather("New York");
-JsonDocument doc;
-deserializeJson(doc, weather);
-float temp = doc["temperature"];
+// Using helper (automatically fetches if needed)
+double temp = ink.getWeatherTemperature();
+String cond = ink.getWeatherCondition();
+
+// Or manually checking response
+Response r = ink.getWeather("New York");
+if (r.status == "OK") {
+    double temp = r.data["temperature"];
+}
 ```
 
 ### Stock Prices
