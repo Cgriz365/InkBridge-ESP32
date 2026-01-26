@@ -132,9 +132,26 @@ Fetches current weather data.
 Fetches weather forecast.
 
 **Helpers:**
-- `String getWeatherForecastMinTemp(int index)`
-- `String getWeatherForecastMaxTemp(int index)`
-- `String getWeatherForecastCondition(int index)`
+- `int getWeatherForcastDayCount()`
+- `String getWeatherForcastLocation()`
+- `String getWeatherForecastDate(int index)`
+- `String getWeatherForecastMinTemp(int index)` or `(String date)`
+- `String getWeatherForecastMaxTemp(int index)` or `(String date)`
+- `String getWeatherForecastCondition(int index)` or `(String date)`
+- `String getWeatherForcastTrend()`
+
+#### `Response getWeatherHistory(String location = "", String date = "")`
+Fetches historical weather data.
+- **location**: Optional location override
+- **date**: Date in YYYY-MM-DD format
+
+**Helpers:**
+- `int getWeatherHistoryCount()`
+- `String getWeatherHistoryLocation()`
+- `String getWeatherHistoryDate(int index)`
+- `String getWeatherHistoryAvgTemp(int index)` or `(String date)`
+- `String getWeatherHistoryCondition(int index)` or `(String date)`
+- `String getWeatherHistoryTrend()`
 
 #### `Response getAstronomy(String location = "")`
 Fetches astronomy data.
@@ -142,7 +159,12 @@ Fetches astronomy data.
 **Helpers:**
 - `String getAstronomySunrise()`
 - `String getAstronomySunset()`
+- `String getAstronomyMoonrise()`
+- `String getAstronomyMoonset()`
+- `String getAstronomyLocation()`
 - `String getAstronomyMoonPhase()`
+- `int getAstronomyMoonIllumination()`
+- `bool getAstronomyIsDaytime()`
 
 ### Stocks & Crypto
 
@@ -155,6 +177,8 @@ Fetches current stock data.
 - `double getStockPrice()`
 - `double getStockPercent()`
 - `String getStockSymbol()`
+- `double getStockHigh()`
+- `double getStockLow()`
 
 #### `Response getCrypto(String symbol = "")`
 Fetches current cryptocurrency data.
@@ -164,6 +188,8 @@ Fetches current cryptocurrency data.
 **Helpers:**
 - `double getCryptoPrice()`
 - `double getCryptoPercent()`
+- `String getCryptoSymbol()`
+- `String getCryptoName()`
 
 #### `Response getStockArray(String symbol = "", int days = 7)`
 Fetches historical stock data.
@@ -206,6 +232,9 @@ Fetches travel/route information.
 **Helpers:**
 - `String getTravelDuration()`
 - `String getTravelDistance()`
+- `String getTravelOrigin()`
+- `String getTravelDestination()`
+- `String getTravelMode()`
 
 ### Canvas
 
@@ -217,9 +246,13 @@ Fetches custom canvas data.
 - **Returns**: Response object
 
 **Helpers:**
-- `String getCanvasAssignmentName(int index)`
-- `String getCanvasAssignmentDueDate(int index)`
-- `String getCanvasLetterGrade(String course)`
+- `Response getCanvasAssignment(String id)` or `(int index)`
+- `String getCanvasAssignmentName(String id)` or `(int index)`
+- `String getCanvasAssignmentDueDate(String id)` or `(int index)`
+- `String getCanvasAssignmentType(String id)` or `(int index)`
+- `Response getCanvasGradeSet(String course)` or `(int index)`
+- `String getCanvasLetterGrade(String course)` or `(int index)`
+- `int getCanvasNumericGrade(String course)` or `(int index)`
 - `double getGPAEstimate(bool weighted, ...)`
 
 ### Spotify Integration
