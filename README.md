@@ -411,3 +411,9 @@ See LICENSE file for details.
 ## Support
 
 For issues, feature requests, or questions, please open an issue on GitHub.
+
+## AI Notice
+
+*Documentation primarily written by AI (Gemini + Claude), however it has been thorougly reviewed and edited.*
+
+
